@@ -4,14 +4,14 @@
 
 「12ステップで作る 組込みOS自作入門」（坂井弘亮著／カットシステム）で
 H8/3069F向けに作られた組み込みOSであるKOZOS(http://kozos.jp/kozos/)を、
-Orange Pi PC (Allwinner H3, Cortex-A7)で動作するようにしてみました。
+pcDuino (Allwinner A10, Cortex-A8)で動作するようにしてみました。
 
 ただしOS本体のみの移植とし、ブートローダーはU-Bootを使用します。
 
 
 ● 開発環境
 
-OpenBSD-6.2/amd64において、以下のパッケージを使用しました。
+OpenBSD-6.3/amd64において、以下のパッケージを使用しました。
 
 	gmake-4.2.1
 	arm-none-eabi-binutils-2.27p0
@@ -35,8 +35,8 @@ kozos.elf, kozos, kozos.motが得られます。
 
 ● 実行方法
 
-ストリップ済みのバイナリ(kozos)をOrange Pi PCへ転送し、実行してください。
-以下の例では、XMODEMでOrange Pi PCへ転送し、実行しています。
+ストリップ済みのバイナリ(kozos)をpcDuinoへ転送し、実行してください。
+以下の例では、XMODEMでpcDuinoへ転送し、実行しています。
 
 	Hit any key to stop autoboot:  0
 	=> loadx
@@ -88,14 +88,12 @@ kozos.elf, kozos, kozos.motが得られます。
 	monitor>
 	（表示は一部省略しています）
 
-もう一つ、U-Bootを書き込んだOrange Pi起動用のSDカードを作成するための
+もう一つ、U-Bootを書き込んだpcDuino起動用のSDカードを作成するための
 補助として、makedisk.shを追加しています（これはOpenBSD専用です）。
 
 以下のように使用してディスクイメージを作成し、
 
-	# ./mkdisk.sh \
-	  /usr/local/share/u-boot/orangepi_pc/u-boot-sunxi-with-spl.bin \
-	  output.img
+	# ./mkdisk.sh /path/to/u-boot-sunxi-with-spl.bin output.img
 
 これをSDカードに書き込んで、起動ディスクとしてください。
 
